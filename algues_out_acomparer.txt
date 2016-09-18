@@ -1,0 +1,4 @@
+la liste initiale
+Liste de 1 éléments : [ (4,-1)]
+la liste résultat de 20 itérations
+Liste de 8 éléments : [ (6,-1)(7,1)(8,-1)(7,1)(8,-1)(9,1)(8,-1)(7,1)]
