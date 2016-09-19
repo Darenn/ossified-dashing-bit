@@ -52,7 +52,9 @@ static maillon maillon_creer(void *val, void (*copier)(void *val, void **pt)) {
  * correspondant à une liste de taille 1 ).
  * \param m maillon à tester.
  */
-static bool maillon_est_unique(maillon m) {}
+static bool maillon_est_unique(maillon m) {
+  return m == m->precedent & m == m->suivant;
+}
 
 /*!
  * Destruction de toute la liste chaînée.
