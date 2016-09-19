@@ -40,7 +40,12 @@ struct maillon_struct {
  * à partir d'une recopie.
  * \return nouveau maillon stockant val et bouclant sur lui-même.
  */
-static maillon maillon_creer(void *val, void (*copier)(void *val, void **pt)) {}
+static maillon maillon_creer(void *val, void (*copier)(void *val, void **pt)) {
+  maillon m = malloc(sizeof(struct maillon_struct));
+  copier(val, &m->val);
+  m->precedent = m->suivant = m;
+  return m;
+}
 
 /*!
  * Test pour savoir si le maillon est unique ( bouclant sur lui-même et
