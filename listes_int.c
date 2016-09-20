@@ -3,6 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define ASSERT_LISTE() assert(l != NULL);
+
+#define ASSERT_LISTE_COURANT()                                                 \
+  assert(l != NULL);                                                           \
+  assert(l->courant != NULL);
+
 /*! \file
  * \brief La documentation pour les parties (types, variables, fonctions…)
  * internes du modules sont documentées ici.
@@ -158,6 +164,7 @@ liste liste_creer(void) {
 }
 
 void liste_detruire(liste *const l) {
+  ASSERT_LISTE();
   maillon_detruire(&(*l)->tete);
   free(*l);
   *l = NULL;
@@ -169,6 +176,7 @@ void liste_detruire(liste *const l) {
  * \param val valeur entière à jouter.
  */
 static void liste_ajouter_a_vide(liste const l, int const val) {
+  ASSERT_LISTE();
   maillon m = maillon_creer(val);
   l->tete = m;
   l->pied = m;
@@ -177,6 +185,7 @@ static void liste_ajouter_a_vide(liste const l, int const val) {
 
 /*! Pour enlever la dernière valeur. */
 static void liste_enlever_dernier(liste const l) {
+  ASSERT_LISTE();
   maillon_detruire(&l->tete);
   l->tete = NULL;
   l->pied = NULL;
@@ -184,10 +193,12 @@ static void liste_enlever_dernier(liste const l) {
 }
 
 bool liste_est_vide(liste const l) {
+  ASSERT_LISTE();
   return l->tete == NULL && l->courant == NULL && l->pied == NULL;
 }
 
 void liste_insertion_debut(liste const l, int const val) {
+  ASSERT_LISTE();
   if (!liste_est_vide(l)) {
     maillon_ajouter_avant(l->tete, val);
     l->tete = l->tete->precedent;
@@ -198,6 +209,7 @@ void liste_insertion_debut(liste const l, int const val) {
 }
 
 void liste_insertion_fin(liste const l, int const val) {
+  ASSERT_LISTE();
   if (!liste_est_vide(l)) {
     maillon_ajouter_apres(l->pied, val);
     l->pied = l->pied->suivant;
@@ -208,6 +220,7 @@ void liste_insertion_fin(liste const l, int const val) {
 }
 
 void liste_insertion_apres(liste const l, int const val) {
+  ASSERT_LISTE();
   maillon_ajouter_apres(l->courant, val);
   l->taille++;
   if (l->courant == l->pied) {
@@ -216,6 +229,7 @@ void liste_insertion_apres(liste const l, int const val) {
 }
 
 void liste_insertion_avant(liste const l, int const val) {
+  ASSERT_LISTE();
   maillon_ajouter_avant(l->courant, val);
   l->taille++;
   if (l->courant == l->tete) {
@@ -224,6 +238,7 @@ void liste_insertion_avant(liste const l, int const val) {
 }
 
 void liste_suppression_debut(liste const l) {
+  ASSERT_LISTE();
   if (!liste_est_vide(l)) {
     maillon_supprimer_avant(l->tete->suivant);
     l->tete = l->pied->suivant;
@@ -234,6 +249,7 @@ void liste_suppression_debut(liste const l) {
 }
 
 void liste_suppression_fin(liste const l) {
+  ASSERT_LISTE();
   if (!liste_est_vide(l)) {
     maillon_supprimer_apres(l->pied->precedent);
     l->pied = l->tete->precedent;
@@ -244,6 +260,7 @@ void liste_suppression_fin(liste const l) {
 }
 
 void liste_suppression_avant(liste const l) {
+  ASSERT_LISTE();
   maillon_supprimer_avant(l->courant);
   l->taille--;
   if (l->courant == l->tete) {
@@ -252,6 +269,7 @@ void liste_suppression_avant(liste const l) {
 }
 
 void liste_suppression_apres(liste const l) {
+  ASSERT_LISTE();
   maillon_supprimer_apres(l->courant);
   l->taille--;
   if (l->courant == l->pied) {
@@ -260,28 +278,55 @@ void liste_suppression_apres(liste const l) {
 }
 
 void liste_affichage(FILE *const f, liste const l) {
+  assert(f != NULL);
+  ASSERT_LISTE();
   fprintf(f, "Liste de %d éléments : ", l->taille);
   maillon_afficher(f, l->tete, l->pied);
 }
 
-void liste_courant_init(liste const l) { l->courant = l->tete; }
+void liste_courant_init(liste const l) {
+  ASSERT_LISTE();
+  l->courant = l->tete;
+}
 
-void liste_courant_suivant(liste const l) { l->courant = l->courant->suivant; }
+void liste_courant_suivant(liste const l) {
+  ASSERT_LISTE_COURANT();
+  l->courant = l->courant->suivant;
+}
 
 void liste_decalage(liste const l, int n) {
+  ASSERT_LISTE_COURANT();
   for (int i = 0; i < n; i++) {
     l->courant = l->courant->suivant;
   }
 }
 
-int liste_taille(liste const l) { return l->taille; }
+int liste_taille(liste const l) {
+  ASSERT_LISTE();
+  return l->taille;
+}
 
-int liste_valeur_tete(liste const l) { return l->tete->val; }
+int liste_valeur_tete(liste const l) {
+  ASSERT_LISTE();
+  return l->tete->val;
+}
 
-int liste_valeur_pied(liste const l) { return l->pied->val; }
+int liste_valeur_pied(liste const l) {
+  ASSERT_LISTE();
+  return l->pied->val;
+}
 
-int liste_valeur_courant(liste const l) { return l->courant->val; }
+int liste_valeur_courant(liste const l) {
+  ASSERT_LISTE_COURANT();
+  return l->courant->val;
+}
 
-bool liste_est_tete(liste const l) { return l->courant == l->tete; }
+bool liste_est_tete(liste const l) {
+  ASSERT_LISTE_COURANT();
+  return l->courant == l->tete;
+}
 
-bool liste_est_pied(liste const l) { return l->courant == l->pied; }
+bool liste_est_pied(liste const l) {
+  ASSERT_LISTE_COURANT();
+  return l->courant == l->pied;
+}
