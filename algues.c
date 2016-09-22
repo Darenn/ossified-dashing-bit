@@ -46,7 +46,12 @@ void detruire_algue(void **pt) { free(*pt); }
 /* à définir */
 liste algue_liste_init(void (*_copier)(void *val, void **pt),
                        void (*_afficher)(FILE *f, void *val),
-                       void (*_detruire)(void **pt)) {}
+                       void (*_detruire)(void **pt)) {
+  liste l = liste_creer(_copier, _afficher, _detruire);
+  algue *p_a = algue_valeur(T1, GAUCHE);
+  liste_insertion_debut(l, p_a);
+  liste_courant_init(l);
+}
 
 /* une itération consiste à visiter tous les éléments de la liste */
 /* et à faire évoluer chaque cellule selon la règle (cf énoncé) */
