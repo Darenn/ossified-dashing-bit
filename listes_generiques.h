@@ -47,6 +47,13 @@ liste liste_creer(void (*_copie)(void *val, void **pt),
 void liste_detruire(liste *l);
 
 /*!
+ * Pour savoir si une liste est vide ou non.
+ * \param l liste à tester.
+ * \return true ssi la liste est vide.
+ */
+bool liste_est_vide(liste const l);
+
+/*!
  * Insertion en début de liste.
  * À la sortie de la fonction, tete pointe désormais sur ce nouvel élément
  * (prendre en compte le cas de la liste vide).
