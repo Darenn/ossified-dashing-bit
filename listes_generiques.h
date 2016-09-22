@@ -125,6 +125,8 @@ void liste_affichage(FILE *f, liste l);
 
 /*!
  * Initialise courant à tete.
+ * Doit être appelé avant d'utiliser courant.
+ * Doit être appelé sur une liste non vide.
  * \param l liste à parcourir.
  */
 void liste_courant_init(liste l);
