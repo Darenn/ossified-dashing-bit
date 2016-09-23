@@ -289,7 +289,7 @@ void liste_insertion_apres(liste l, void *val) {
 
 void liste_suppression_debut(liste l) {
   ASSERT_LISTE();
-  if (!liste_est_vide(l)) {
+  if (liste_taille(l) >= 2) {
     maillon_supprimer_avant(l->tete->suivant, l->detruire);
     l->tete = l->pied->suivant;
     l->taille--;
@@ -300,7 +300,7 @@ void liste_suppression_debut(liste l) {
 
 void liste_suppression_fin(liste l) {
   ASSERT_LISTE();
-  if (!liste_est_vide(l)) {
+  if (liste_taille(l) >= 2) {
     maillon_supprimer_apres(l->pied->precedent, l->detruire);
     l->pied = l->tete->precedent;
     l->taille--;
@@ -311,19 +311,29 @@ void liste_suppression_fin(liste l) {
 
 void liste_suppression_avant(liste l) {
   ASSERT_LISTE_COURANT();
-  maillon_supprimer_avant(l->courant, l->detruire);
-  l->taille--;
-  if (l->courant == l->tete) {
-    l->pied = l->tete->precedent;
+  assert(l->courant != NULL);
+  if (liste_taille(l) >= 2) {
+    maillon_supprimer_avant(l->courant, l->detruire);
+    l->taille--;
+    if (l->courant == l->tete) {
+      l->pied = l->tete->precedent;
+    }
+  } else {
+    liste_enlever_dernier(l);
   }
 }
 
 void liste_suppression_apres(liste l) {
   ASSERT_LISTE_COURANT();
-  maillon_supprimer_apres(l->courant, l->detruire);
-  l->taille--;
-  if (l->courant == l->pied) {
-    l->tete = l->pied->suivant;
+  assert(l->courant != NULL);
+  if (liste_taille(l) >= 2) {
+    maillon_supprimer_apres(l->courant, l->detruire);
+    l->taille--;
+    if (l->courant == l->pied) {
+      l->tete = l->pied->suivant;
+    }
+  } else {
+    liste_enlever_dernier(l);
   }
 }
 

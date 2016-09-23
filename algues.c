@@ -53,7 +53,6 @@ algue *algue_valeur(int _taille, int _orientation) {
 */
 void copier_algue(void *val, void **pt) {
   assert(val != NULL);
-  assert(*pt != NULL);
   *pt = (algue *)malloc(sizeof(algue));
   memcpy(*pt, val, sizeof(algue));
 }
