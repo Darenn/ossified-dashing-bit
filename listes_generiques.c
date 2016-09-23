@@ -34,12 +34,6 @@ struct maillon_struct {
   maillon precedent;
 };
 
-/* les définitions des fonctions sont identiques que pour la liste des entiers*/
-/* Mais certaines nécessitent un paramètre supplémentaire la fonction copier */
-/* afficher ou detruire qui permettent de rendre générique la liste */
-/* Pour l'essentiel il s'agit de reprendre les fonctions pour les listes */
-/* d'entiers et de les adapter à la généricité */
-
 /*!
  * \brief Création d'un maillon dont la valeur est val .
  * suivant et precedent doivent pointer sur ce maillon.
@@ -183,8 +177,8 @@ static void maillon_supprimer_apres(maillon m, void (*detruire)(void **pt)) {
 }
 
 /* \brief la structure définit 3 champs supplémentaires qui sont des pointeurs
- * sur
- * fonction*/
+ * sur fonction.
+ */
 struct liste_struct {
   unsigned int taille;
   maillon tete;
@@ -222,7 +216,7 @@ void liste_detruire(liste *l) {
 }
 
 /*!
- * Pour ajouter une valeur à une liste vide.
+ * \brief Pour ajouter une valeur à une liste vide.
  * \param l liste où ajouter.
  * \param val valeur entière à jouter.
  */
@@ -235,7 +229,7 @@ static void liste_ajouter_a_vide(liste const l, int *const val) {
   l->taille = 1;
 }
 
-/*! Pour enlever la dernière valeur. */
+/*! \brief Pour enlever la dernière valeur. */
 static void liste_enlever_dernier(liste const l) {
   ASSERT_LISTE();
   maillon_detruire(&l->tete, l->detruire);
