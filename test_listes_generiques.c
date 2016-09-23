@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define NDEBUG
-
 void copie_int(void *val, void **pt) {
   *pt = (int *)malloc(sizeof(int));
   memcpy(*pt, val, sizeof(int));
