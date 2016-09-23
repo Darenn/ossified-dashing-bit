@@ -18,12 +18,14 @@
  * \version 2016
  */
 
-/*! Un maillon est un pointeur sur (référence vers) une struct maillon_struct .
+/*! \brief Un maillon est un pointeur sur (référence vers) une struct
+ * maillon_struct .
  */
 typedef struct maillon_struct *maillon;
 
 /*!
- * Structure servant à définir un élément du type de la valeur de la liste.
+ * \brief Structure servant à définir un élément du type de la valeur de la
+ * liste.
  * Cette structure n'est visible que depuis listes_generiques.c .
  * Les fonctions attenantes sont static pour être également masquées. */
 struct maillon_struct {
@@ -39,7 +41,7 @@ struct maillon_struct {
 /* d'entiers et de les adapter à la généricité */
 
 /*!
- * Création d'un maillon dont la valeur est val .
+ * \brief Création d'un maillon dont la valeur est val .
  * suivant et precedent doivent pointer sur ce maillon.
  * \param val un pointeur vers la valeur à stocker dans le maillon.
  * \param copier un pointeur vers une fonction qui définit la valeur du maillon
@@ -55,7 +57,7 @@ static maillon maillon_creer(void *val, void (*copier)(void *val, void **pt)) {
 }
 
 /*!
- * Test pour savoir si le maillon est unique ( bouclant sur lui-même et
+ * \brief Test pour savoir si le maillon est unique ( bouclant sur lui-même et
  * correspondant à une liste de taille 1 ).
  * \param m maillon à tester.
  */
@@ -65,7 +67,7 @@ static bool maillon_est_unique(maillon m) {
 }
 
 /*!
- * Destruction de toute la liste chaînée.
+ * \brief Destruction de toute la liste chaînée.
  * \param m pointeur sur un maillon de la liste chaînée à détruire.
  * \param detruire une pointeur vers une fonction qui définit comment désallouer
  * la mémoire relative à la valeur du maillon
@@ -88,7 +90,7 @@ static void maillon_detruire(maillon *m, void (*detruire)(void **pt)) {
 }
 
 /*!
- * Affichage d'un ensemble de maillon à partir d'un début et d'une fin.
+ * \brief Affichage d'un ensemble de maillon à partir d'un début et d'une fin.
  * Le résultat est de la forme \verbatim[ 1 2 3 ]\endverbatim sans saut de
  * ligne.
  * \param f flux où imprimer.
@@ -104,7 +106,6 @@ static void maillon_afficher(FILE *const f, maillon m_debut, maillon m_fin,
   fprintf(f, "[ ");
   while (m != m_fin) {
     afficher(f, m->val);
-    // fprintf(f, " "); TODO Voir après avec le prof
     m = m->suivant;
   }
   afficher(f, m->val);
@@ -112,7 +113,7 @@ static void maillon_afficher(FILE *const f, maillon m_debut, maillon m_fin,
 }
 
 /*!
- * Ajout d'un élément avant le maillon.
+ * \brief Ajout d'un élément avant le maillon.
  * \param m maillon avant lequel on doit insérer.
  * \param _val un pointeur vers la valeur entière à insérer.
  * \param copier un pointeur vers une fonction qui définit la valeur du maillon
@@ -131,7 +132,7 @@ static void maillon_ajouter_avant(maillon m, void *_val,
 }
 
 /*!
- * Ajout d'un élément après le maillon.
+ * \brief Ajout d'un élément après le maillon.
  * \param m maillon après lequel on doit insérer.
  * \param _val un pointeur vers la valeur entière à insérer.
  * \param copier un pointeur vers une fonction qui définit la valeur du maillon
@@ -147,7 +148,7 @@ static void maillon_ajouter_apres(maillon m, void *_val,
 }
 
 /*!
-* Suppression du maillon d'avant s'il existe (c.-à-d. si la liste
+* \brief Suppression du maillon d'avant s'il existe (c.-à-d. si la liste
 * correspondante ne contient qu'un maillon on ne fait rien).
 * \param m maillon avant lequel on doit supprimer.
 * \param copier un pointeur vers une fonction qui définit comment désallouer la
@@ -164,7 +165,7 @@ static void maillon_supprimer_avant(maillon m, void (*detruire)(void **pt)) {
   }
 }
 
-/*! suppression du maillon d'après s'il existe (c.-à-d. si la liste
+/*! \brief suppression du maillon d'après s'il existe (c.-à-d. si la liste
  * correspondante ne contient qu'un maillon on ne fait rien).
  * \param m maillon après lequel on doit supprimer.
  * \param copier un pointeur vers une fonction qui définit comment désallouer la
@@ -181,7 +182,8 @@ static void maillon_supprimer_apres(maillon m, void (*detruire)(void **pt)) {
   }
 }
 
-/* la structure définit 3 champs supplémentaires qui sont des pointeurs sur
+/* \brief la structure définit 3 champs supplémentaires qui sont des pointeurs
+ * sur
  * fonction*/
 struct liste_struct {
   unsigned int taille;
